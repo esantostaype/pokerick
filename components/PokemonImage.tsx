@@ -25,6 +25,7 @@ export function PokemonImage({ id, name, width, height }: Props) {
             )}
 
             <Image
+                className='fadeIn'
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`}
                 alt={ "Pokémon " + name }
                 width={ width }
