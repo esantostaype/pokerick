@@ -1,0 +1,40 @@
+.pagination{
+  display: flex;
+  justify-content: center;
+}
+
+.pagination__list{
+  align-items: center;
+  display: flex;
+}
+
+.pagination__list li{
+  text-align: center;
+}
+
+.pagination__list li a,
+.pagination__list li button{
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.pagination__list li:hover a,
+.pagination__list li:hover button{
+  color: rgb(var(--primary));
+}
+
+.pagination__list li.active a,
+.pagination__list li.active button{
+  background-color: rgba(var(--primary), 0.1);
+  color: rgb(var(--primary));
+  pointer-events: none;
+  padding: 8px;
+}
+
+.pagination__arrow i{
+  font-size: 10px;
+}

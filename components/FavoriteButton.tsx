@@ -1,30 +1,30 @@
 'use client'
-import { HeartIcon } from "../components";
-import { useFavoritePokemonStore } from "../store/pokemon-store";
+import { HeartIcon } from '@/components'
+import { useFavoritePokemonStore } from '@/store/pokemon-store'
 
 interface Props {
-  pokemonId: number;
-  className?: string;
+  pokemonId: number
+  className?: string
 }
 
 export const FavoriteButton = ({ pokemonId, className }: Props) => {
-  const { favoriteIds, addFavorite, removeFavorite } = useFavoritePokemonStore();
-  const isFavorite = favoriteIds.includes( pokemonId );
+  const { favoriteIds, addFavorite, removeFavorite } = useFavoritePokemonStore()
+  const isFavorite = favoriteIds.includes( pokemonId )
 
   const onToggle = () => {
-    if (isFavorite) {
-      removeFavorite( pokemonId );
+    if ( isFavorite ) {
+      removeFavorite( pokemonId )
     } else {
-      addFavorite( pokemonId );
+      addFavorite( pokemonId )
     }
-  };
+  }
 
   return (
     <button className={ className } onClick={ onToggle }>
-      {isFavorite ? (
+      { isFavorite ? (
         <HeartIcon
-          width={24}
-          height={24}
+          width={ 24 }
+          height={ 24 }
           fill="var(--primary-theme)"
           stroke="var(--primary-theme)"
         />
@@ -32,5 +32,5 @@ export const FavoriteButton = ({ pokemonId, className }: Props) => {
         <HeartIcon width={ 24 } height={ 24 } />
       )}
     </button>
-  );
-};
+  )
+}

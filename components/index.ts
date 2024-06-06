@@ -1,11 +1,12 @@
-export * from './Icons';
-export { Header } from './Header';
-export { PokemonGrid } from './PokemonGrid';
-export { PokemonCard } from './PokemonCard';
-export { PokemonImage } from './PokemonImage';
-export { PokemonAbilities } from './PokemonAbilities';
-export { FavoritePokemonGrid } from './FavoritePokemonGrid';
-export { FavoriteButton } from './FavoriteButton';
-export { Progress } from './ui/Progress';
-export { Spinner } from './ui/Spinner';
-export { Counter } from './Counter';
+export * from './Icons'
+export { Header } from './Header'
+export { PokemonGrid } from './PokemonGrid'
+export { PokemonCard } from './PokemonCard'
+export { PokemonImage } from './PokemonImage'
+export { PokemonAbilities } from './PokemonAbilities'
+export { FavoritePokemon } from './FavoritePokemon'
+export { FavoriteButton } from './FavoriteButton'
+export { Progress } from './ui/Progress'
+export { Spinner } from './ui/Spinner'
+export { Pagination } from './ui/Pagination'
+export { MaterialPagination } from './ui/MaterialPagination'

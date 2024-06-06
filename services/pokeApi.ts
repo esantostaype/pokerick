@@ -6,8 +6,8 @@ export const getPokemons = async ( limit = 20, offset = 0 ) => {
 	const pokemonData = await response.json()
 
 	const pokemons = await Promise.all(
-		pokemonData.results.map(async ( initialPokemon: { url: RequestInfo | URL }) => {
-			const pokemonResponse = await fetch( initialPokemon.url )
+		pokemonData.results.map(async (initialPokemon: { url: RequestInfo | URL }) => {
+			const pokemonResponse = await fetch(initialPokemon.url)
 			const pokemon = await pokemonResponse.json()
 
 			const simplePokemon = {
@@ -22,7 +22,45 @@ export const getPokemons = async ( limit = 20, offset = 0 ) => {
 		})
 	)
 
-	return pokemons
+	return { pokemonData, pokemons }
+}
+
+export const getPokemonsByType = async ( type: string ) => {
+	const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`)
+	const pokemonData = await response.json()
+
+	const pokemons = await Promise.all(
+		pokemonData.pokemon.map(async ( initialPokemon: any ) => {
+			const pokemonResponse = await fetch( initialPokemon.pokemon.url )
+			const pokemon = await pokemonResponse.json()
+
+			const simplePokemon = {
+				id: pokemon.id,
+				name: pokemon.name,
+				types: pokemon.types,
+				height: pokemon.height,
+				weight: pokemon.weight
+			}
+
+			return simplePokemon
+		})
+	)
+
+	const typeName = pokemonData.name
+
+	return { typeName, pokemons }
+}
+
+export interface PokemonType {
+  name: string;
+  url: string;
+}
+
+export const getPokemonTypes = async () => {
+  const response = await fetch(`https://pokeapi.co/api/v2/type?offset=0&limit=18`)
+  const typesData = await response.json()  
+  const typeNames = typesData.results.map( (type: { name: any }) => type.name )
+  return typeNames
 }
 
 export const getPokemonBy = async ( name: string ) => {
@@ -30,16 +68,16 @@ export const getPokemonBy = async ( name: string ) => {
 	const pokemonData: FullPokemon = await response.json()
 
 	const abilities = await Promise.all(
-		pokemonData.abilities.map(async ( ability: Ability ) => {
-			const abilityResponse = await fetch( ability.ability.url )
+		pokemonData.abilities.map(async (ability: Ability) => {
+			const abilityResponse = await fetch(ability.ability.url)
 			const abilities: Ability = await abilityResponse.json()
 			return abilities
 		})
 	)
 
 	const moves = await Promise.all(
-		pokemonData.moves.map(async ( move: Move ) => {
-			const moveResponse = await fetch( move.move.url )
+		pokemonData.moves.map(async (move: Move) => {
+			const moveResponse = await fetch(move.move.url)
 			const moves: Move = await moveResponse.json()
 			return moves
 		})
@@ -60,22 +98,58 @@ export const getPokemonBy = async ( name: string ) => {
 }
 
 export const getPokemonsByIds = async ( ids: number[] ) => {
-  const pokemons = await Promise.all(
-    ids.map( async (id: number) => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ id }`)
-      const pokemonData = await response.json()
+	const pokemons = await Promise.all(
+		ids.map( async ( id: number ) => {
+			const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ id }`)
+			const pokemonData = await response.json()
 
-      const pokemon = {
-        id: pokemonData.id,
-        name: pokemonData.name,
-        types: pokemonData.types,
-        height: pokemonData.height,
-        weight: pokemonData.weight
-      }
+			const pokemon = {
+				id: pokemonData.id,
+				name: pokemonData.name,
+				types: pokemonData.types,
+				height: pokemonData.height,
+				weight: pokemonData.weight
+			}
 
-      return pokemon
-    })
-  )
+			return pokemon
+		})
+	)
 
-  return pokemons
+	return pokemons
+}
+
+export const getPokemon = async ( name: string ): Promise<FullPokemon> => {
+	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ name }`);
+
+	const pokemonData: FullPokemon = await response.json();
+
+	const abilities = await Promise.all(
+		pokemonData.abilities.map(async (ability: Ability) => {
+			const abilityResponse = await fetch(ability.ability.url);
+			const abilities: Ability = await abilityResponse.json();
+			return abilities;
+		})
+	);
+
+	const moves = await Promise.all(
+		pokemonData.moves.map(async (move: Move) => {
+			const moveResponse = await fetch(move.move.url);
+			const moves: Move = await moveResponse.json();
+			return moves;
+		})
+	);
+
+	const pokemon: FullPokemon = {
+		id: pokemonData.id,
+		name: pokemonData.name,
+		types: pokemonData.types,
+		height: pokemonData.height,
+		weight: pokemonData.weight,
+		stats: pokemonData.stats,
+		abilities,
+		moves
+	}
+
+	return pokemon
+
 }

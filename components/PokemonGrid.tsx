@@ -5,38 +5,17 @@ import { getPokemons } from '@/services/pokeApi'
 import type { SimplePokemon } from '@/interfaces'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-export const PokemonGrid = () => {
-  const [pokemons, setPokemons] = useState<SimplePokemon[]>([])
-  const [offset, setOffset] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
+type Props = {
+  pokemons: SimplePokemon[]
+}
 
-  const fetchMorePokemons = async () => {
-    const newPokemons = await getPokemons( 10, offset )
-    setPokemons((prev) => [ ...prev, ...newPokemons ])
-    setOffset((prev) => prev + 10)
-    if ( newPokemons.length < 10 ) {
-      setHasMore( false )
-    }
-  }
-
-  useEffect(() => {
-    fetchMorePokemons()
-  }, [])
+export const PokemonGrid = ({ pokemons }: Props) => {
 
   return (
-    <InfiniteScroll
-      dataLength={ pokemons.length }
-      style={{ width: '100%', overflow: 'initial' }}
-      next={ fetchMorePokemons }
-      hasMore={ hasMore }
-      loader={ <div className='infiniteLoading'><Spinner/></div> }
-      endMessage={ <p className='infiniteFinalText'>Yay! You have seen it all :)</p> }
-    >
-      <ul className="pokemon-app__list">
-        { pokemons.map(( pokemon ) => (
-          <PokemonCard key={ pokemon.id } pokemon={ pokemon } />
-        ))}
-      </ul>
-    </InfiniteScroll>
+    <ul className="pokemon-app__list">
+      { pokemons.map(( pokemon ) => (
+        <PokemonCard key={ pokemon.id } pokemon={ pokemon } />
+      ))}
+    </ul>
   )
 }

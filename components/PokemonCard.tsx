@@ -1,8 +1,9 @@
-import Link from "next/link"
-import Image from "next/image"
-import { PokemonImage } from "."
-import { SimplePokemon } from "@/interfaces"
-import { FavoriteButton } from './';
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+import { PokemonImage, FavoriteButton } from '@/components'
+import { SimplePokemon } from '@/interfaces'
+import { Tilt } from 'react-tilt'
 
 interface Props {
     pokemon: SimplePokemon
@@ -12,9 +13,10 @@ export function PokemonCard({ pokemon } : Props ) {
 
 	return (
 		<li className={`pokemon-app__item fadeIn ${pokemon.types[0].type.name}`}>
+		<Tilt style={{ transformStyle: "preserve-3d" }}>
 			<div className="pokemon-app__item__content">
 				<FavoriteButton pokemonId={ +pokemon.id } className="button icon-button pokemon-app__item__like" />
-				<Link href={ `pokemon/${ pokemon.name }` } className="pokemon-app__item__link">
+				<Link href={ `/pokemon/${ pokemon.name }` } className="pokemon-app__item__link">
 					<div className="pokemon-app__item__image">
 						<PokemonImage id={ pokemon.id } name={ pokemon.name } width={ 200 } height={ 200 } />
 					</div>
@@ -48,6 +50,7 @@ export function PokemonCard({ pokemon } : Props ) {
 					</div>
 				</Link>
 			</div>
+			</Tilt>
 		</li>
 	)
 }
