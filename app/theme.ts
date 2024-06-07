@@ -6,19 +6,21 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#ff0',
-    },
-    secondary: {
-      main: '#f48fb1',
+      main: 'rgb(0, 255, 155)',
     },
     background: {
-      default: '#121212',
-      paper: '#1d1d1d',
+      default: 'rgb(44,49,81)',
+      paper: 'rgb(44,49,81)',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#aaaaaa',
+      primary: '#ffffff'
     },
+  },
+  typography: {
+    fontFamily: [
+      'Inter',
+    ].join(','),
+    fontSize: 12
   },
 });
 

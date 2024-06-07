@@ -1,9 +1,5 @@
-'use client'
-import { useState, useEffect } from 'react'
-import { PokemonCard, Spinner } from '@/components'
-import { getPokemons } from '@/services/pokeApi'
+import { PokemonCard } from '@/components'
 import type { SimplePokemon } from '@/interfaces'
-import InfiniteScroll from 'react-infinite-scroll-component'
 
 type Props = {
   pokemons: SimplePokemon[]

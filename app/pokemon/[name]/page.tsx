@@ -116,10 +116,10 @@ export default async function PokemonPage({ params }: Props) {
 							width={512}
 							height={512}
 						/>
-						<FavoriteButton
+						{/* <FavoriteButton
 							pokemonId={+pokemon.id}
 							className="pokemon-app__detail__like"
-						/>
+						/> */}
 					</figure>
 					<div className="pokemon-app__detail__more-info">
 						<h4 className="pokemon-app__detail__subtitle">Moves</h4>

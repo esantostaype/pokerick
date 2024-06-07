@@ -15,7 +15,7 @@ export function PokemonCard({ pokemon } : Props ) {
 		<li className={`pokemon-app__item fadeIn ${pokemon.types[0].type.name}`}>
 		<Tilt style={{ transformStyle: "preserve-3d" }}>
 			<div className="pokemon-app__item__content">
-				<FavoriteButton pokemonId={ +pokemon.id } className="button icon-button pokemon-app__item__like" />
+				{/* <FavoriteButton pokemonId={ +pokemon.id } className="button icon-button pokemon-app__item__like" /> */}
 				<Link href={ `/pokemon/${ pokemon.name }` } className="pokemon-app__item__link">
 					<div className="pokemon-app__item__image">
 						<PokemonImage id={ pokemon.id } name={ pokemon.name } width={ 200 } height={ 200 } />
@@ -32,7 +32,7 @@ export function PokemonCard({ pokemon } : Props ) {
 											width={ 24 }
 											height={ 24 }
 										/>
-										{ typeObject.type.name }
+										<span>{ typeObject.type.name }</span>
 									</li>
 								)
 							})}

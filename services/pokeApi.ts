@@ -1,4 +1,4 @@
-import type { FullPokemon } from '../interfaces'
+import type { FullPokemon, SimplePokemon } from '../interfaces'
 import type { Ability, Move } from '../interfaces/full-pokemon'
 
 export const getPokemons = async ( limit = 20, offset = 0 ) => {
@@ -24,6 +24,62 @@ export const getPokemons = async ( limit = 20, offset = 0 ) => {
 
 	return { pokemonData, pokemons }
 }
+
+export const getPokemonsByFilters= async (query: string, type?: string): Promise<SimplePokemon[]> => {
+  let response;
+  if (type) {
+    response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+    const data = await response.json();
+    const filteredPokemons = data.pokemon.filter((pokemonEntry: { pokemon: { name: string } }) =>
+      pokemonEntry.pokemon.name.includes(query.toLowerCase())
+    );
+
+    const pokemons = await Promise.all(
+      filteredPokemons.map(async (initialPokemon: { pokemon: { url: RequestInfo | URL } }) => {
+        const pokemonResponse = await fetch(initialPokemon.pokemon.url);
+        const pokemon = await pokemonResponse.json();
+
+        const simplePokemon: SimplePokemon = {
+          id: pokemon.id,
+          name: pokemon.name,
+          types: pokemon.types,
+          height: pokemon.height,
+          weight: pokemon.weight
+        };
+
+        return simplePokemon;
+      })
+    );
+
+    return pokemons;
+  } else {
+    response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10000`);
+    const data = await response.json();
+
+    const filteredPokemons = data.results.filter((pokemon: { name: string }) =>
+      pokemon.name.includes(query.toLowerCase())
+    );
+
+    const pokemons = await Promise.all(
+      filteredPokemons.map(async (initialPokemon: { url: RequestInfo | URL }) => {
+        const pokemonResponse = await fetch(initialPokemon.url);
+        const pokemon = await pokemonResponse.json();
+
+        const simplePokemon: SimplePokemon = {
+          id: pokemon.id,
+          name: pokemon.name,
+          types: pokemon.types,
+          height: pokemon.height,
+          weight: pokemon.weight
+        };
+
+        return simplePokemon;
+      })
+    );
+
+    return pokemons;
+  }
+};
 
 export const getPokemonsByType = async ( type: string ) => {
 	const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`)
@@ -52,8 +108,8 @@ export const getPokemonsByType = async ( type: string ) => {
 }
 
 export interface PokemonType {
-  name: string;
-  url: string;
+  name: string
+  url: string
 }
 
 export const getPokemonTypes = async () => {
@@ -119,25 +175,25 @@ export const getPokemonsByIds = async ( ids: number[] ) => {
 }
 
 export const getPokemon = async ( name: string ): Promise<FullPokemon> => {
-	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ name }`);
+	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ name }`)
 
-	const pokemonData: FullPokemon = await response.json();
+	const pokemonData: FullPokemon = await response.json()
 
 	const abilities = await Promise.all(
 		pokemonData.abilities.map(async (ability: Ability) => {
-			const abilityResponse = await fetch(ability.ability.url);
-			const abilities: Ability = await abilityResponse.json();
-			return abilities;
+			const abilityResponse = await fetch(ability.ability.url)
+			const abilities: Ability = await abilityResponse.json()
+			return abilities
 		})
-	);
+	)
 
 	const moves = await Promise.all(
 		pokemonData.moves.map(async (move: Move) => {
-			const moveResponse = await fetch(move.move.url);
-			const moves: Move = await moveResponse.json();
-			return moves;
+			const moveResponse = await fetch(move.move.url)
+			const moves: Move = await moveResponse.json()
+			return moves
 		})
-	);
+	)
 
 	const pokemon: FullPokemon = {
 		id: pokemonData.id,

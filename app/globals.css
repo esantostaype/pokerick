@@ -76,6 +76,10 @@ img{
     outline: none;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 a,
 li,
 span,
@@ -132,8 +136,26 @@ a {
     -webkit-tap-highlight-color: transparent;
 }
 
+input, select{
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    height: 40px;
+    padding: 8px 16px;
+}
+
 span {
     font-weight: inherit;
+}
+
+.search-form{
+    display: flex;
+    gap: 8px;
+}
+
+.search-form__icon{
+    font-size: 12px;
+    line-height: 0.8em;
+    margin-right: 12px;
 }
 
 .button{
@@ -211,7 +233,7 @@ video{
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 999999;
+    z-index: 2;
 }
 
 .logo{
@@ -232,6 +254,7 @@ video{
     border-left: 1px solid rgba(255,255,255,0.08);
     border-right: 1px solid rgba(255,255,255,0.08);
     display: flex;
+    justify-content: center;
     flex: 1;
     padding: 0 20px;
 }
@@ -1064,7 +1087,21 @@ video{
 
 
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1600px) {
+
+    .pokemon-app__content{
+        padding: 132px 48px 48px;
+    }
+
+    .pokemon-app__list {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 4fr));
+        grid-gap: 32px;
+    }
+
+}
+
+
+@media screen and (max-width: 1365px) {
 
     .pokemon-app__nav{
         border: none;
@@ -1073,26 +1110,19 @@ video{
     .pokemon-app__content{
         border: none;
         margin: 0;
-        padding: 142px 40px 40px;
+        padding: 142px 64px 64px;
     }
 
     .pokemon-app__list {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 4fr));
-        grid-gap: 20px;
-    }
-
-    .pokemon-app__item__link {
-        border-radius: 25px;
-        min-height: 0;
-        padding: 25px;
+        grid-gap: 32px;
     }
 
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1279px) {
 
     .pokemon-app__content{
-        padding: 132px 30px 30px;
+        padding: 122px 32px 32px;
     }
 
     .pokemon-app__detail__header{
@@ -1131,16 +1161,74 @@ video{
         font-size: 1.5em;
     }
 
+    .pokemon-app__list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 4fr));
+    }
+
+    .pokemon-app__item__content::before{
+        height: 96px;
+    }
+
+    .pokemon-app__item__link{
+        padding: 24px;
+    }
+
+
+    .pokemon-app__item__image {
+        margin: -100px 0 0 -24px;
+    }
+
+    .pokemon-app__item__image img{
+        width: 140px;
+    }
+
+    .pokemon-app__item__title{
+        font-size: 1.25em;
+    }
+
+    .pokemon-app__item__info{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pokemon-app__item__types{
+        gap: 8px;
+    }
+
+    .pokemon-app__item__types__item span{
+        display: none;
+    }
+
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 767px) {
     
     body{
         font-size: 12px;
     }
 
+    .logo, .links{
+        flex: 0 0 48px;
+        height: 48px;
+        width: 48px;
+    }
+
+    .logo svg{
+        width: 24px;
+    }
+
+    .pokemon-app__content{
+        padding: 100px 32px 32px;
+    }
+
     .pokemon-app__list {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 4fr));
+        grid-template-columns: repeat(auto-fill, minmax(120px, 4fr));
+        gap: 24px;
+    }
+
+    .pokemon-app__item__link{
+        border-radius: 8px;
+        padding: 16px;
     }
 
     .pokemon-app__detail__header__main{
@@ -1162,7 +1250,16 @@ video{
 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 639px) {
+
+    .css-1ed99yc-MuiFormControl-root-MuiTextField-root,
+    .css-kcydiy-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
+        min-width: 80px;
+    }
+
+    .header__content{
+        padding: 0 8px;
+    }
 
     .pokemon-app__logo {
         height: 64px;
@@ -1174,11 +1271,44 @@ video{
     }
 
     .pokemon-app__content{
-        padding: 94px 25px 25px;
+        padding: 72px 24px 24px;
+    }
+
+    .pokemon-app__list {
+        gap: 16px;
+    }
+
+    .pokemon-app__item{
+        padding-bottom: 24px;
+    }
+
+    .pokemon-app__item__image{
+        margin: -64px 0 0 -16px;
+    }
+
+    .pokemon-app__item__image img{
+        width: 100px;
+    }
+
+    .pokemon-app__item__info__item{
+        font-size: 11px;
     }
 
     .pokemon-app__detail__info{
         display: block;
+    }
+
+    .pokemon-app__item__types{
+        gap: 4px;
+        margin: 4px 0 6px;
+    }
+
+    .pokemon-app__item__types img{
+        width: 16px;
+    }
+
+    .pokemon-app__item__content::before{
+        height: 72px;
     }
 
     .pokemon-app__detail__info__item:first-child {
